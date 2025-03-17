@@ -27,7 +27,7 @@ class UserController extends Controller
 
         // $user = UserModel::find(1);
         // return view('user', ['data' => $user]);
-        #$fillable
+        
 
         // $user = UserModel::findOr(  20, ['username', 'nama'], function() {
         //     abort(404);
