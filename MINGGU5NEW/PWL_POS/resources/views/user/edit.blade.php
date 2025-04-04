@@ -11,8 +11,10 @@
         <div class="alert alert-danger alert-dismissible"> 
             <h5><i class="icon fas fa-ban"></i> Kesalahan!</h5>             Data yang Anda cari tidak ditemukan. 
         </div> 
-        <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>       @else 
-        <form method="POST" action="{{ url('/user/'.$user->user_id) }}" class="formhorizontal">           @csrf 
+        <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>     
+          @else 
+        <form method="POST" action="{{ url('/user/'.$user->user_id) }}" class="formhorizontal">          
+             @csrf 
           {!! method_field('PUT') !!}  <!-- tambahkan baris ini untuk proses edit yang butuh method PUT --> 
           <div class="form-group row"> 
             <label class="col-1 control-label col-form-label">Level</label> 

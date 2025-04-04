@@ -15,15 +15,17 @@ class KategoriModel extends Model
 {
     use HasFactory;
 
+    protected $table = 'm_kategori';
+    protected $primaryKey = 'kategori_id';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $guard = [
-    ];
-    public function barang(): HasMany 
-    {
-        return $this->hasMany(BarangModel::class, 'barang_id', 'barang_id');
-    }
+    // protected $guard = [
+    // ];
+    // public function barang(): HasMany 
+    // {
+    //     return $this->hasMany(BarangModel::class, 'barang_id', 'barang_id');
+    // }
 }
