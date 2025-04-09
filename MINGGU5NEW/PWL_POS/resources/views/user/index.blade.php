@@ -53,9 +53,9 @@
             processing: true,
             serverSide: true,
             ajax: {
-                "url": "{{ url('/user/list') }}",
+                "url": "{{ url('/user/user/list') }}",
                 "dataType": "json",
-                "type": "GET",
+                "type": "post",
                 "data": function(d) {
                     d.level_id = $('#level_id').val();
                 }
