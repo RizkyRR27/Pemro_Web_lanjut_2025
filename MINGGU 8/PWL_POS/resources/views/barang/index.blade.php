@@ -1,4 +1,4 @@
-@extends('layout.template')
+@extends('layouts.template')
 
 @section('content')
 <div class="card">
@@ -6,8 +6,9 @@
         <h3 class="card-title">Daftar barang</h3>
         <div class="card-tools">
             <button onclick="modalAction('{{ url('/barang/import') }}')" class="btn btn-info">Import Barang</button>
-            <a href="{{ url('/barang/export_excel') }}" class="btn btn-primary"><i class="fa fa-file-excel"></i> Export Barang</a>
+            <a href="{{ url('/barang/export_excel') }}" class="btn btn-primary"><i class="fa fa-file- excel"></i> Export Barang</a>
             <button onclick="modalAction('{{ url('/barang/create_ajax') }}')" class="btn btn-success">Tambah Data (Ajax)</button>
+            <a href="{{ url('/barang/export_pdf') }}" class="btn btn-danger"><i class="fa fa-file- pdf"></i> Export Barang</a>
         </div>
     </div>
     <div class="card-body">
@@ -72,7 +73,7 @@
             processing: true,
             serverSide: true, 
             ajax: {
-                "url": "{{ url('barang/barang/list') }}",
+                "url": "{{ url('barang/list') }}",
                 "dataType": "json",
                 "type": "POST",
                 "data": function (d) {

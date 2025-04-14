@@ -3,12 +3,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
+
                 <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
-                    <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5> Data yang anda cari tidak ditemukan
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
+                    Data yang anda cari tidak ditemukan
                 </div>
                 <a href="{{ url('/barang') }}" class="btn btn-warning">Kembali</a>
             </div>
@@ -16,54 +18,65 @@
     </div>
 @else
     <form action="{{ url('/barang/' . $barang->barang_id . '/update_ajax') }}" method="POST" id="form-edit">
-        @csrf @method('PUT')
+
+        @csrf
+        @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Data Barang</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+
+                    <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
                             aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body">
-                    <div class="form-group ">
-                        <label>Level</label>
-                        <select class="form-control" id="kategori_id" name="kategori_id" required>
-                            <option value="">- Pilih Level -</option>
-                            @foreach ($kategori as $item)
-                                <option value="{{ $item->kategori_id }}" @if ($item->kategori_id == $barang->kategori_id) selected @endif>
-                                    {{ $item->kategori_nama }}
-                                </option>
+                    <div class="form-group">
+                        <label>Kategori Barang</label>
+                        <select name="kategori_id" id="kategori_id" class="form-control" required>
+                            <option value="">- Pilih Kategori -</option>
+                            @foreach ($kategori as $l)
+                                <option {{ $l->kategori_id == $barang->kategori_id ? 'selected' : '' }}
+                                    value="{{ $l->kategori_id }}">{{ $l->kategori_nama }}</option>
                             @endforeach
                         </select>
+
                         <small id="error-kategori_id" class="error-text form-text text-danger"></small>
+
                     </div>
                     <div class="form-group">
                         <label>Barang Kode</label>
                         <input value="{{ $barang->barang_kode }}" type="text" name="barang_kode" id="barang_kode"
                             class="form-control" required>
+
                         <small id="error-barang_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Barang Nama</label>
                         <input value="{{ $barang->barang_nama }}" type="text" name="barang_nama" id="barang_nama"
                             class="form-control" required>
+
                         <small id="error-barang_nama" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Harga Beli</label>
                         <input value="{{ $barang->harga_beli }}" type="number" name="harga_beli" id="harga_beli"
                             class="form-control" required>
+
                         <small id="error-harga_beli" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Harga Jual</label>
-                        <input value="{{ $barang->harga_jual }}" type="number"  name="harga_jual" id="harga_jual" class="form-control" required>
+                        <input value="{{ $barang->harga_jual }}" type="number" name="harga_jual" id="harga_jual"
+                            class="form-control" required>
+
                         <small id="error-harga_jual" class="error-text form-text text-danger"></small>
                     </div>
-
                 </div>
                 <div class="modal-footer">
+
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
+
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </div>
@@ -84,16 +97,18 @@
                     },
                     barang_nama: {
                         required: true,
-                        minlength: 0,
+                        minlength: 3,
                         maxlength: 100
                     },
                     harga_beli: {
                         required: true,
-                        number: true
+                        minlength: 3,
+                        maxlength: 100
                     },
                     harga_jual: {
                         required: true,
-                        number: true
+                        minlength: 3,
+                        maxlength: 100
                     },
                 },
                 submitHandler: function(form) {

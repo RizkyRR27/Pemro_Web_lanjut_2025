@@ -7,7 +7,8 @@
      <title>Register Pengguna</title>
      <!-- Google Font: Source Sans Pro -->
      <link rel="stylesheet"
-         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallb
+ ack">
      <!-- Font Awesome -->
      <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
      <!-- icheck bootstrap -->
@@ -24,24 +25,9 @@
          <div class="card card-outline card-primary">
              <div class="card-header text-center"><a href="{{ url('/') }}" class="h1"><b>Admin</b>LTE</a></div>
              <div class="card-body">
+                 <p class="login-box-msg">Register a new account</p>
                  <form action="{{ url('register') }}" method="POST" id="form-register">
                      @csrf
- 
-                     <div class="input-group mb-3">
-                         <select id="level_id" name="level_id" class="form-control" required>
-                             <option value="">Select Level</option>
-                             @foreach ($levels as $level)
-                                 <option value="{{ $level->level_id }}">{{ $level->level_nama }}</option>
-                             @endforeach
-                         </select>
-                         <div class="input-group-append">
-                             <div class="input-group-text">
-                                 <span class="fas fa-layer-group"></span>
-                             </div>
-                         </div>
-                         <small id="error-level_id" class="error-text text-danger"></small>
-                     </div>
- 
                      <div class="input-group mb-3">
                          <input type="text" id="username" name="username" class="form-control" placeholder="Username"
                              required>
@@ -86,13 +72,30 @@
                          <small id="error-password_confirmation" class="error-text text-danger"></small>
                      </div>
  
-                     <div class="row">
-                         <div class="col-12">
-                             <p>Have an account? <a href="{{ url('login') }}">Login</a></p>
-                         </div>
-                     </div>
                      <div class="input-group mb-3">
-                         <button type="submit" class="btn btn-primary btn-block">Register</button>
+                         <select id="level_id" name="level_id" class="form-control" required>
+                             <option value="">Select Level</option>
+                             @foreach ($levels as $level)
+                                 <option value="{{ $level->level_id }}">{{ $level->level_nama }}</option>
+                             @endforeach
+                         </select>
+                         <div class="input-group-append">
+                             <div class="input-group-text">
+                                 <span class="fas fa-layer-group"></span>
+                             </div>
+                         </div>
+                         <small id="error-level_id" class="error-text text-danger"></small>
+                     </div>
+ 
+                     <div class="row">
+                         <div class="col-8">
+                             <p>Already have an account? <a href="{{ url('/login') }}">Login</a></p>
+                         </div>
+                         <!-- /.col -->
+                         <div class="col-4">
+                             <button type="submit" class="btn btn-primary btn-block">Register</button>
+                         </div>
+                         <!-- /.col -->
                      </div>
                  </form>
              </div>

@@ -1,101 +1,66 @@
-@empty($barang)
+@empty($kategori)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
+
                 <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
                         aria-hidden="true">&times;</span></button>
+
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
-                    <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5> Data yang anda cari tidak ditemukan
+                    <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
+                    Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/barang') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/kategori') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/barang/' . $barang->barang_id . '/update_ajax') }}" method="POST" id="form-edit">
-        @csrf @method('PUT')
+    <form action="{{ url('/kategori/' . $kategori->kategori_id . '/delete_ajax') }}" method="POST" id="form-delete">
+
+        @csrf
+        @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Barang</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Kategori</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group ">
-                        <label>Level</label>
-                        <select class="form-control" id="kategori_id" name="kategori_id" required>
-                            <option value="">- Pilih Level -</option>
-                            @foreach ($kategori as $item)
-                                <option value="{{ $item->kategori_id }}" @if ($item->kategori_id == $barang->kategori_id) selected @endif>
-                                    {{ $item->kategori_nama }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <small id="error-kategori_id" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Barang Kode</label>
-                        <input value="{{ $barang->barang_kode }}" type="text" name="barang_kode" id="barang_kode"
-                            class="form-control" required>
-                        <small id="error-barang_kode" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Barang Nama</label>
-                        <input value="{{ $barang->barang_nama }}" type="text" name="barang_nama" id="barang_nama"
-                            class="form-control" required>
-                        <small id="error-barang_nama" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Harga Beli</label>
-                        <input value="{{ $barang->harga_beli }}" type="number" name="harga_beli" id="harga_beli"
-                            class="form-control" required>
-                        <small id="error-harga_beli" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Harga Jual</label>
-                        <input value="{{ $barang->harga_jual }}" type="number"  name="harga_jual" id="harga_jual" class="form-control" required>
-                        <small id="error-harga_jual" class="error-text form-text text-danger"></small>
-                    </div>
 
                 </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <h5><i class="icon fas fa-ban"></i> Konfirmasi !!!</h5>
+                        Apakah Anda ingin menghapus data seperti di bawah ini?
+                    </div>
+                    <table class="table table-sm table-bordered table-striped">
+                        <tr>
+                            <th class="text-right col-3">Kategori Kode :</th>
+                            <td class="col-9">{{ $kategori->kategori_kode }}</td>
+                        </tr>
+
+                        <tr>
+                            <th class="text-right col-3">Kategori Nama :</th>
+                            <td class="col-9">{{ $kategori->kategori_nama }}</td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="modal-footer">
+
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+
+                    <button type="submit" class="btn btn-primary">Ya, Hapus</button>
                 </div>
             </div>
         </div>
     </form>
     <script>
         $(document).ready(function() {
-            $("#form-edit").validate({
-                rules: {
-                    kategori_id: {
-                        required: true,
-                        number: true
-                    },
-                    barang_kode: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 20
-                    },
-                    barang_nama: {
-                        required: true,
-                        minlength: 0,
-                        maxlength: 100
-                    },
-                    harga_beli: {
-                        required: true,
-                        number: true
-                    },
-                    harga_jual: {
-                        required: true,
-                        number: true
-                    },
-                },
+            $("#form-delete").validate({
+                rules: {},
                 submitHandler: function(form) {
                     $.ajax({
                         url: form.action,
@@ -109,7 +74,7 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                dataBarang.ajax.reload();
+                                dataKategori.ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {

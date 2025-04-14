@@ -2,28 +2,25 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class StokSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $stok = [];
+        $data = [];
         for ($i = 1; $i <= 10; $i++) {
-            $stok[] = [
+            $data[] = [
+                'stok_id' => $i,
                 'barang_id' => $i,
-                'user_id' => 1, 
-                'stok_tanggal' => Carbon::now(),
-                'stok_jumlah' => rand(10, 100)
+                'user_id' => 3, // Staff
+                'stok_tanggal' => Carbon::now()->subDays(rand(1, 30))->toDateTimeString(),
+                'stok_jumlah' => rand(10, 100),
             ];
         }
 
-        DB::table('t_stok')->insert($stok);
+        DB::table('t_stok')->insert($data);
     }
 }

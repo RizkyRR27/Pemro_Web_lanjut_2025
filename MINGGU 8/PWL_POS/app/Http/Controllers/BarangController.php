@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LevelModel;
+use App\Models\LevelModel; 
 use App\Models\BarangModel;
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Validator; 
+use PhpOffice\PhpSpreadsheet\IOFactory; 
 use Yajra\DataTables\Facades\DataTables;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 
 class BarangController extends Controller
@@ -27,8 +29,8 @@ class BarangController extends Controller
         $kategori = KategoriModel::select('kategori_id', 'kategori_nama')->get();
 
         return view('barang.index', [
-            'activeMenu' => $activeMenu,
-            'breadcrumb' => $breadcrumb,
+            'activeMenu' => $activeMenu, 
+            'breadcrumb' => $breadcrumb, 
             'kategori' => $kategori
         ]);
     }
@@ -37,12 +39,12 @@ class BarangController extends Controller
     public function list(Request $request)
     {
         $barang = BarangModel::select('barang_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'kategori_id')->with('kategori');
-
+    
         $kategori_id = $request->input('filter_kategori');
         if (!empty($kategori_id)) {
             $barang->where('kategori_id', $kategori_id);
         }
-
+    
         return DataTables::of($barang)
             ->addIndexColumn()
             ->addColumn('aksi', function ($barang) { // menambahkan kolom aksi
@@ -51,15 +53,15 @@ class BarangController extends Controller
                 $btn .= '<form class="d-inline-block" method="POST" action="'. url('/barang/'.$barang->barang_id).'">'
                     . csrf_field() . method_field('DELETE') .
                     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
-                $btn = '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/show_ajax') . '\')" class="btn btn-info btn-sm">Detail</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/edit_ajax') . '\')" class="btn btn-warning btn-sm">Edit</button> ';
-                $btn .= '<button onclick="modalAction(\'' . url('/barang/' . $barang->barang_id . '/delete_ajax') . '\')" class="btn btn-danger btn-sm">Hapus</button> ';
+                $btn = '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id . '/show_ajax').'\')" class="btn btn-info btn-sm">Detail</button> ';
+                $btn .= '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id . '/edit_ajax').'\')" class="btn btn-warning btn-sm">Edit</button> ';
+                $btn .= '<button onclick="modalAction(\''.url('/barang/' . $barang->barang_id . '/delete_ajax').'\')" class="btn btn-danger btn-sm">Hapus</button> ';
                 return $btn;
             })
             ->rawColumns(['aksi']) // ada teks html
             ->make(true);
     }
-
+    
     //Menampilkan halaman form dgn Ajax
     public function create_ajax()
     {
@@ -78,7 +80,7 @@ class BarangController extends Controller
                 'barang_nama' => ['required', 'string', 'max:100'],
                 'harga_beli' => ['required', 'numeric'],
                 'harga_jual' => ['required', 'numeric'],
-            ];
+        ];
 
             $validator = Validator::make($request->all(), $rules);
 
@@ -102,8 +104,7 @@ class BarangController extends Controller
 
 
     // Menampilkan form edit data barang dgn ajax
-    public function edit_ajax($id)
-    {
+    public function edit_ajax($id){
         $barang = BarangModel::find($id);
         $level = LevelModel::select('level_id', 'level_nama')->get();
         return view('barang.edit_ajax', ['barang' => $barang, 'level' => $level]);
@@ -115,11 +116,11 @@ class BarangController extends Controller
     {
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'kategori_id' => ['required', 'integer', 'exists:m_kategori,kategori_id'],
-                'barang_kode' => ['required', 'min:3', 'max:20', 'unique:m_barang,barang_kode,' . $id . ',barang_id'],
-                'barang_nama' => ['required', 'string', 'max:100'],
-                'harga_beli' => ['required', 'numeric'],
-                'harga_jual' => ['required', 'numeric'],
+                    'kategori_id' => ['required', 'integer', 'exists:m_kategori,kategori_id'],
+                    'barang_kode' => ['required', 'min:3', 'max:20', 'unique:m_barang,barang_kode,' . $id . ',barang_id'],
+                    'barang_nama' => ['required', 'string', 'max:100'],
+                    'harga_beli' => ['required', 'numeric'],
+                    'harga_jual' => ['required', 'numeric'],
             ];
 
             $validator = Validator::make($request->all(), $rules);
@@ -184,7 +185,7 @@ class BarangController extends Controller
     {
         return view('barang.import');
     }
-
+    
     //import data barang dari file excel
     public function import_ajax(Request $request)
     {
@@ -286,7 +287,7 @@ class BarangController extends Controller
 
         // Set title sheet
         $sheet->setTitle('Data Barang');
-
+        
         // Generate filename
         $filename = 'Data_Barang_' . date('Y-m-d_H-i-s') . '.xlsx';
 
@@ -303,4 +304,22 @@ class BarangController extends Controller
         $writer->save('php://output');
         exit;
     }
+
+    public function export_pdf()
+        {
+            $barang = BarangModel::select('kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
+                ->orderBy('kategori_id')
+                ->orderBy('barang_kode')
+                ->with('kategori')
+                ->get();
+
+            // use Barryvdh\DomPDF\Facade\Pdf;
+            $pdf = Pdf::loadView('barang.export_pdf', ['barang' => $barang]);
+            $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+            $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url
+            $pdf->render();
+
+            return $pdf->stream('Data Barang ' . date('Y-m-d H:i:s') . '.pdf');
+        }
+
 }

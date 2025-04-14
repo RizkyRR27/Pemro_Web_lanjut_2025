@@ -3,9 +3,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+                <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
@@ -18,15 +19,17 @@
     </div>
 @else
     <form action="{{ url('/supplier/' . $supplier->supplier_id . '/delete_ajax') }}" method="POST" id="form-delete">
+
         @csrf
         @method('DELETE')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Data Supplier</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria- label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+
                 </div>
                 <div class="modal-body">
                     <div class="alert alert-warning">
@@ -34,27 +37,26 @@
                         Apakah Anda ingin menghapus data seperti di bawah ini?
                     </div>
                     <table class="table table-sm table-bordered table-striped">
-
                         <tr>
-                            <th class="text-right col-3">Supplier Kode :</th>
+                            <th class="text-right col-3">supplier Kode :</th>
                             <td class="col-9">{{ $supplier->supplier_kode }}</td>
                         </tr>
+
                         <tr>
-                            <th class="text-right col-3">Supplier Nama :</th>
+                            <th class="text-right col-3">supplier Nama :</th>
                             <td class="col-9">{{ $supplier->supplier_nama }}</td>
                         </tr>
+
                         <tr>
-                            <th class="text-right col-3">Supplier Telp :</th>
-                            <td class="col-9">{{ $supplier->supplier_telp }}</td>
-                        </tr>
-                        <tr>
-                            <th class="text-right col-3">Supplier Alamat :</th>
+                            <th class="text-right col-3">supplier Alamat :</th>
                             <td class="col-9">{{ $supplier->supplier_alamat }}</td>
                         </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
+
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
+
                     <button type="submit" class="btn btn-primary">Ya, Hapus</button>
                 </div>
             </div>

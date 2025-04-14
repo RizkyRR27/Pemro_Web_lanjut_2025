@@ -2,31 +2,26 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class BarangSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $data = [
-            ['barang_id' => 1, 'barang_kode' => 'BK01', 'barang_nama' => 'mmajicjer', 'harga_beli' => 500000, 'harga_jual' => 6000000, 'kategori_id' => 2],
-            ['barang_id' => 2, 'barang_kode' => 'BK02', 'barang_nama' => 'Handphone', 'harga_beli' => 300000, 'harga_jual' => 3500000, 'kategori_id' => 2],
-            ['barang_id' => 3, 'barang_kode' => 'BK03', 'barang_nama' => 'civic', 'harga_beli' => 5000000, 'harga_jual' => 75000, 'kategori_id' => 3],
-            ['barang_id' => 4, 'barang_kode' => 'BK04', 'barang_nama' => 'Sayur', 'harga_beli' => 15000, 'harga_jual' => 200000, 'kategori_id' => 1],
-            ['barang_id' => 5, 'barang_kode' => 'BK05', 'barang_nama' => 'Nasi Padang', 'harga_beli' => 25000, 'harga_jual' => 35000, 'kategori_id' => 1],
-            ['barang_id' => 6, 'barang_kode' => 'BK06', 'barang_nama' => 'supra', 'harga_beli' => 50000, 'harga_jual' => 10000, 'kategori_id' => 3],
-            ['barang_id' => 7, 'barang_kode' => 'BK07', 'barang_nama' => 'meja', 'harga_beli' => 2000000, 'harga_jual' => 300000, 'kategori_id' => 5],
-            ['barang_id' => 8, 'barang_kode' => 'BK08', 'barang_nama' => 'lemari', 'harga_beli' => 400000, 'harga_jual' => 500000, 'kategori_id' => 5],
-            ['barang_id' => 9, 'barang_kode' => 'BK09', 'barang_nama' => 'Palu', 'harga_beli' => 100000, 'harga_jual' => 150000, 'kategori_id' => 4],
-            ['barang_id' => 10, 'barang_kode' => 'BK10', 'barang_nama' => 'Baut', 'harga_beli' => 7000, 'harga_jual' => 12000, 'kategori_id' => 4],
+            ['barang_id' => 1, 'kategori_id' => 1, 'barang_kode' => 'BRG001', 'barang_nama' => 'Biskuit', 'harga_beli' => 3000, 'harga_jual' => 5000],
+            ['barang_id' => 2, 'kategori_id' => 1, 'barang_kode' => 'BRG002', 'barang_nama' => 'Roti', 'harga_beli' => 5000, 'harga_jual' => 7000],
+            ['barang_id' => 3, 'kategori_id' => 2, 'barang_kode' => 'BRG003', 'barang_nama' => 'Teh Botol', 'harga_beli' => 2000, 'harga_jual' => 3000],
+            ['barang_id' => 4, 'kategori_id' => 2, 'barang_kode' => 'BRG004', 'barang_nama' => 'Kopi Instan', 'harga_beli' => 3000, 'harga_jual' => 4000],
+            ['barang_id' => 5, 'kategori_id' => 3, 'barang_kode' => 'BRG005', 'barang_nama' => 'Mouse Wireless', 'harga_beli' => 100000, 'harga_jual' => 150000],
+            ['barang_id' => 6, 'kategori_id' => 3, 'barang_kode' => 'BRG006', 'barang_nama' => 'Keyboard Mechanical', 'harga_beli' => 250000, 'harga_jual' => 350000],
+            ['barang_id' => 7, 'kategori_id' => 4, 'barang_kode' => 'BRG007', 'barang_nama' => 'Sapu', 'harga_beli' => 15000, 'harga_jual' => 20000],
+            ['barang_id' => 8, 'kategori_id' => 4, 'barang_kode' => 'BRG008', 'barang_nama' => 'Pel', 'harga_beli' => 20000, 'harga_jual' => 25000],
+            ['barang_id' => 9, 'kategori_id' => 5, 'barang_kode' => 'BRG009', 'barang_nama' => 'Kaos Polos', 'harga_beli' => 40000, 'harga_jual' => 50000],
+            ['barang_id' => 10, 'kategori_id' => 5, 'barang_kode' => 'BRG010', 'barang_nama' => 'Jaket Hoodie', 'harga_beli' => 100000, 'harga_jual' => 120000],
         ];
+
         DB::table('m_barang')->insert($data);
     }
-    }
-
+}
